@@ -1,1 +1,123 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$embedika-primary: mat-palette($mat-indigo);
+$embedika-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$embedika-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$embedika-theme: mat-light-theme($embedika-primary, $embedika-accent, $embedika-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($embedika-theme);
+
 /* You can add global styles to this file, and also import other style files */
+@import "~@fortawesome/fontawesome-free/css/all.css";
+@import "https://fonts.googleapis.com/css2?family=Roboto:wght@500&wght@300&display=swap";
+
+
+body{
+  font-family: Roboto;
+  font-weight: 300;
+  background: #FAFAFA;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0;
+  padding: 0px 0px 0px 0px;
+}
+a{
+  color: #2962FF;
+  text-decoration: none;
+  &:hover{
+    text-decoration: underline;
+  }
+}
+
+.main-content h1{
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 32px;
+  margin: 0px 0px 20px 0px;
+}
+h2{
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+}
+
+.grid{
+  display: grid;
+  grid-template-columns: 1fr minmax(250px, 400px);
+  grid-auto-rows: minmax(100px, auto);
+}
+.main-content{
+  padding: 10px 20px 10px 20px;
+}
+.main-sidebar{
+  background: #ffffff;
+  border-left: 1px solid #A5A5A5;
+  padding: 16px 10px 0px 10px;
+}
+.main-sidebar__title{
+  margin-bottom: 15px!important;
+}
+.main-sidebar__search{
+  width: 100%;
+}
+
+.main-sidebar__mat-expansion .mat-expansion-panel-header{
+  padding: 0px;
+  background: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+  height: 48px!important;
+}
+
+.mat-expansion-panel {
+  & .mat-expansion-panel-header.cdk-keyboard-focused,
+  & .mat-expansion-panel-header.cdk-program-focused,
+  &:not(.mat-expanded) .mat-expansion-panel-header:hover {
+    &:not([aria-disabled='true']) {
+      background: none;
+    }
+  }
+}
+.mat-expansion-panel-body{
+  padding: 0px!important;
+  box-shadow:  0px 3px 5px 0px #cccccc;
+}
+.mat-expansion-panel-spacing{
+  margin: 0px!important;
+}
+.mat-expansion-panel-content{
+  padding: 0px 2px 9px 2px;
+}
+.mat-accordion .mat-expansion-panel{
+  border-radius: 0px!important;
+}
+.main-sidebar__label{
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.54);
+  margin-bottom: -12px;
+  display: block;
+  z-index: 999;
+  position: relative;
+}
+.mat-list-base {
+  padding-top: 0px!important;
+}
