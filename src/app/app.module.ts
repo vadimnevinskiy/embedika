@@ -17,7 +17,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { FilterPipe } from './pipes/filter.pipe';
 
-import { NgxPaginationModule } from 'ngx-pagination';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +35,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MatIconModule,
     MatPaginatorModule,
     MatExpansionModule,
-    NgxPaginationModule,
     MatCheckboxModule
   ],
   providers: [],

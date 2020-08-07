@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import {interval} from 'rxjs';
-import {element} from 'protractor';
+import {PageEvent} from '@angular/material/paginator';
+import {MatPaginator} from '@angular/material/paginator';
+
 
 export interface Card {
   id: number;
@@ -27,8 +28,10 @@ export class AppComponent{
   highValue = 5;
   search = '';
   portCompleted = 0;
+  filterData = [];
 
   selectedPorts: string[];
+  pageEvent: PageEvent;
 
   ports: Port[] = [
     {id: 0, title: 'Port Canavera'},
@@ -51,6 +54,7 @@ export class AppComponent{
   ];
 
   modifyCards: Card[] = [];
+
   constructor() {
     this.cards.forEach((card) => {
       const find = this.ports.find((port) => {
@@ -63,9 +67,8 @@ export class AppComponent{
       };
       this.modifyCards.push(modifyCard);
     });
-
-
   }
+
   config: any = {
     itemsPerPage: 5,
     currentPage: 1,
@@ -83,9 +86,13 @@ export class AppComponent{
   }
 
 
+
   onGroupsChange(selectedPorts: string[]) {
     console.log(selectedPorts);
   }
+
+
+
 
 }
 
