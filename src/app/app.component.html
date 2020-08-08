@@ -13,31 +13,31 @@
 
 
 
-    <div class="paginator-custom">
-      <div class="paginator-custom__left"><span class="material-icons" (click)="previousPage($event)">keyboard_arrow_left</span></div>
-      <div class="paginator-custom__counter">
-        <span class="paginator-custom__text" *ngIf="pageEvent; else Zero">{{pageEvent.pageIndex}}</span>
-        <ng-template #Zero>
-          <span class="paginator-custom__text">0</span>
-        </ng-template>
-      </div>
-      <div class="paginator-custom__right"><span class="material-icons" (click)="nextPage($event)">keyboard_arrow_right</span></div>
-    </div>
+<!--    <div class="paginator-custom">-->
+<!--      <div class="paginator-custom__left"><span class="material-icons" (click)="previousPage($event)">keyboard_arrow_left</span></div>-->
+<!--      <div class="paginator-custom__counter">-->
+<!--        <span class="paginator-custom__text" *ngIf="pageEvent; else Zero">{{pageEvent.pageIndex}}</span>-->
+<!--        <ng-template #Zero>-->
+<!--          <span class="paginator-custom__text">0</span>-->
+<!--        </ng-template>-->
+<!--      </div>-->
+<!--      <div class="paginator-custom__right"><span class="material-icons" (click)="nextPage($event)">keyboard_arrow_right</span></div>-->
+<!--    </div>-->
 
 
   </div>
-<!--<div class="paginator-block">-->
-<!--  <div class="paginator-custom">-->
-<!--    <div class="paginator-custom__left"><span class="material-icons" (click)="previousPage($event)">keyboard_arrow_left</span></div>-->
-<!--    <div class="paginator-custom__counter">-->
-<!--      <span class="paginator-custom__text" *ngIf="pageEvent; else Zero">{{pageEvent.pageIndex}}</span>-->
-<!--      <ng-template #Zero>-->
-<!--        <span class="paginator-custom__text">0</span>-->
-<!--      </ng-template>-->
-<!--    </div>-->
-<!--    <div class="paginator-custom__right"><span class="material-icons" (click)="nextPage($event)">keyboard_arrow_right</span></div>-->
-<!--  </div>-->
-<!--</div>-->
+<div class="paginator-block">
+  <div class="paginator-custom">
+    <div class="paginator-custom__left"><span class="material-icons" (click)="previousPage($event)">keyboard_arrow_left</span></div>
+    <div class="paginator-custom__counter">
+      <span class="paginator-custom__text" *ngIf="pageEvent; else Zero">{{pageEvent.pageIndex}}</span>
+      <ng-template #Zero>
+        <span class="paginator-custom__text">0</span>
+      </ng-template>
+    </div>
+    <div class="paginator-custom__right"><span class="material-icons" (click)="nextPage($event)">keyboard_arrow_right</span></div>
+  </div>
+</div>
 
   <div class="main-sidebar">
     <h2 class="main-sidebar__title">Фильтры</h2>
