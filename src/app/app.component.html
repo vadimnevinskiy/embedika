@@ -1,33 +1,28 @@
 <div class="grid">
   <div class="main-content">
     <h1>{{ title }}</h1>
-<!--      <app-card-->
-<!--        *ngFor="let card of (modifyCards | filter:search)"-->
-<!--        [card]="card"-->
-<!--      ></app-card>-->
 
     <app-card
-      *ngFor="let card of (modifyCards | filter:search  | slice: lowValue : highValue)"
+      *ngFor="let card of (filteredCards  | slice: firstPage : lastPage)"
       [card]="card"
     ></app-card>
-<!--    item in filterData = (totalItems | filter : {itemName: filterText}) | limitTo:3:3*(page-1)-->
+
+    <!--  Invisible Paginator  -->
+    <mat-paginator [length]="filteredCards.length" pageSize=5 showFirstLastButtons="false" hidePageSize="true" (page)="pageEvent = getPaginatorData($event)" style="display: none;"></mat-paginator>
 
 
 
+    <div class="paginator-custom">
+      <div class="paginator-custom__left"><span class="material-icons" (click)="previousPage($event)">keyboard_arrow_left</span></div>
+      <div class="paginator-custom__counter">
+        <span class="paginator-custom__text" *ngIf="pageEvent; else Zero">{{pageEvent.pageIndex}}</span>
+        <ng-template #Zero>
+          <span class="paginator-custom__text">0</span>
+        </ng-template>
+      </div>
+      <div class="paginator-custom__right"><span class="material-icons" (click)="nextPage($event)">keyboard_arrow_right</span></div>
+    </div>
 
-    <mat-paginator [length]="modifyCards.length"
-                   (page)="getPaginatorData($event)"
-                   pageSize=5
-                   showFirstLastButtons="false"
-                   hidePageSize="true"
-                   (page)="pageEvent = $event"
-    >
-    </mat-paginator>
-
-      <div>Page index: <span *ngIf="pageEvent; else Zero">{{pageEvent.pageIndex}}</span></div>
-    <ng-template #Zero>
-      0
-    </ng-template>
 
 
   </div>
@@ -36,41 +31,43 @@
   <div class="main-sidebar">
     <h2 class="main-sidebar__title">Фильтры</h2>
 
-
-<!--    <mat-form-field>-->
-<!--      <mat-label>Filter</mat-label>-->
-<!--      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>-->
-<!--    </mat-form-field>-->
-
-
-      <mat-form-field class="main-sidebar__search">
+    <div class="filter-block">
+    <mat-form-field class="main-sidebar__search">
         <mat-label>Название</mat-label>
-        <input matInput [(ngModel)]="search" name="search" >
+        <input matInput name="search" (keyup)="applyFilter($event)">
       </mat-form-field>
+    </div>
 
 
+    <div class="filter-block">
+      <mat-accordion class="main-sidebar__mat-expansion">
+        <span class="main-sidebar__label">Порт</span>
+        <mat-expansion-panel hideToggle class="mat-elevation-z">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Выбрано: {{port.selectedOptions.selected.length}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #port  [(ngModel)]="selectedPorts" (ngModelChange)="onGroupsChange($event)">
+            <mat-list-option *ngFor="let port of ports" [value]="port">
+              {{port.title}}
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
 
 
-    <mat-accordion class="main-sidebar__mat-expansion">
-      <span class="main-sidebar__label">Порт</span>
-      <mat-expansion-panel hideToggle class="mat-elevation-z">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Выбрано: {{port.selectedOptions.selected.length}}
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-selection-list #port  [(ngModel)]="selectedPorts" (ngModelChange)="onGroupsChange($event)">
-          <mat-list-option *ngFor="let port of ports" [value]="port">
-            {{port.title}}
-          </mat-list-option>
-        </mat-selection-list>
-      </mat-expansion-panel>
-    </mat-accordion>
+      <div class="filter-block">
+        <h3 class="main-sidebar__title">Тип</h3>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="filteredByType">
+          <ul class="main-sidebar__list">
+            <li *ngFor="let type of types"><mat-radio-button value="{{type.id}}" >{{type.title}}</mat-radio-button></li>
+          </ul>
+        </mat-radio-group>
+      </div>
 
-
-
-
-
+    <div>Filtered by: {{filteredByType}}</div>
 
 
 
@@ -78,8 +75,6 @@
 
 
   </div>
-
-
 </div>
 
 

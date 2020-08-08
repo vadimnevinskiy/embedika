@@ -14,6 +14,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 
 import { FilterPipe } from './pipes/filter.pipe';
 
@@ -35,7 +36,8 @@ import { FilterPipe } from './pipes/filter.pipe';
     MatIconModule,
     MatPaginatorModule,
     MatExpansionModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

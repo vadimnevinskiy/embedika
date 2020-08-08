@@ -27,7 +27,6 @@ $embedika-theme: mat-light-theme($embedika-primary, $embedika-accent, $embedika-
 @include angular-material-theme($embedika-theme);
 
 /* You can add global styles to this file, and also import other style files */
-@import "~@fortawesome/fontawesome-free/css/all.css";
 @import "https://fonts.googleapis.com/css2?family=Roboto:wght@500&wght@300&display=swap";
 
 
@@ -74,13 +73,28 @@ h2{
   border-left: 1px solid #A5A5A5;
   padding: 16px 10px 0px 10px;
 }
-.main-sidebar__title{
+h2.main-sidebar__title{
   margin-bottom: 15px!important;
+}
+h3.main-sidebar__title{
+  font-weight: bold;
 }
 .main-sidebar__search{
   width: 100%;
 }
-
+.filter-block{
+  margin-bottom: 13px;
+}
+.main-sidebar__list{
+  margin: 0px 0px 0px -8px;
+  padding: 0;
+  list-style: none;
+  font-size: 16px;
+}
+.main-sidebar__list li{
+  margin: 10px;
+  padding: 0;
+}
 .main-sidebar__mat-expansion .mat-expansion-panel-header{
   padding: 0px;
   background: none;
@@ -121,3 +135,56 @@ h2{
 .mat-list-base {
   padding-top: 0px!important;
 }
+
+
+.paginator-custom{
+  display: flex;
+  vertical-align: middle;
+  text-align: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+
+
+.paginator-custom .paginator-custom__text{
+  font-size: 20px;
+  line-height: 20px;
+}
+
+
+
+.paginator-custom .material-icons{
+  font-size: 26px;
+  line-height: 34px;
+  cursor: pointer;
+  color: #3C474C;
+  &:hover{
+    color: #2962FF;
+  }
+}
+
+
+
+.mat-radio-outer-circle {
+  .mat-radio-checked & {
+    border-color: #2962FF!important;
+  }
+}
+
+.mat-radio-inner-circle {
+  background-color: #2962FF!important;;
+}
+
+.mat-radio-ripple .mat-ripple-element {
+  background-color: rgba(#2962FF, 0.26)!important;;
+}
+
+.mat-pseudo-checkbox-checked,
+.mat-pseudo-checkbox-indeterminate,
+.mat-accent .mat-pseudo-checkbox-checked,
+.mat-accent .mat-pseudo-checkbox-indeterminate{
+  background-color: #2962FF!important;
+}
+
