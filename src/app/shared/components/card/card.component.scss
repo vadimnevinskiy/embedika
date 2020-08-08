@@ -18,6 +18,11 @@
     text-decoration: none;
   }
 }
+.card-item__title a span{
+  display: inline-block;
+  line-height: 16px;
+  vertical-align: -6px;
+}
 .card-item__title span{
   //color: #cccccc;
   //font-size: 10px;
