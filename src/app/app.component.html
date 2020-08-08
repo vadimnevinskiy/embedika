@@ -12,6 +12,7 @@
 
 
 
+
     <div class="paginator-custom">
       <div class="paginator-custom__left"><span class="material-icons" (click)="previousPage($event)">keyboard_arrow_left</span></div>
       <div class="paginator-custom__counter">
@@ -24,9 +25,19 @@
     </div>
 
 
-
   </div>
-
+<!--<div class="paginator-block">-->
+<!--  <div class="paginator-custom">-->
+<!--    <div class="paginator-custom__left"><span class="material-icons" (click)="previousPage($event)">keyboard_arrow_left</span></div>-->
+<!--    <div class="paginator-custom__counter">-->
+<!--      <span class="paginator-custom__text" *ngIf="pageEvent; else Zero">{{pageEvent.pageIndex}}</span>-->
+<!--      <ng-template #Zero>-->
+<!--        <span class="paginator-custom__text">0</span>-->
+<!--      </ng-template>-->
+<!--    </div>-->
+<!--    <div class="paginator-custom__right"><span class="material-icons" (click)="nextPage($event)">keyboard_arrow_right</span></div>-->
+<!--  </div>-->
+<!--</div>-->
 
   <div class="main-sidebar">
     <h2 class="main-sidebar__title">Фильтры</h2>
@@ -48,7 +59,7 @@
               Выбрано: {{port.selectedOptions.selected.length}}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <mat-selection-list #port  [(ngModel)]="selectedPorts" (ngModelChange)="onGroupsChange($event)">
+          <mat-selection-list #port  [(ngModel)]="selectedPorts" (ngModelChange)="onPortsSelected($event)">
             <mat-list-option *ngFor="let port of ports" [value]="port">
               {{port.title}}
             </mat-list-option>
@@ -60,14 +71,14 @@
 
       <div class="filter-block">
         <h3 class="main-sidebar__title">Тип</h3>
-        <mat-radio-group aria-label="Select an option" [(ngModel)]="filteredByType">
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedType" (ngModelChange)="onTypesSelected($event)">
           <ul class="main-sidebar__list">
             <li *ngFor="let type of types"><mat-radio-button value="{{type.id}}" >{{type.title}}</mat-radio-button></li>
           </ul>
         </mat-radio-group>
       </div>
 
-    <div>Filtered by: {{filteredByType}}</div>
+    <div>Filtered by: {{selectedType}}</div>
 
 
 

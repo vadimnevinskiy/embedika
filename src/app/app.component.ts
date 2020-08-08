@@ -6,7 +6,8 @@ import {MatPaginator} from '@angular/material/paginator';
 export interface Card {
   id: number;
   title: string;
-  type: string;
+  typeId: number;
+  typeName?: string;
   portId: number;
   portName?: string;
 }
@@ -42,9 +43,12 @@ export class AppComponent{
   search = ''; // Search field
 
   selectedPorts: string[]; // Array for selected  ports
+  selectedType: number;
 
   storeCards: Card[] = []; // Array for store all modify cards
   filteredCards: Card[] = []; // Array for filter manipulation
+
+  filteredResult: Card[] = [];
 
   // All Ports response
   ports: Port[] = [
@@ -63,40 +67,20 @@ export class AppComponent{
 
   // All Cards response - without port title
   cards: Card[] = [
-    {id: 0, title: 'GO Ms Chief', type: 'High Speed Craft', portId: 0},
-    {id: 1, title: 'A Shortfall of Gravitas', type: 'Barge', portId: 1},
-    {id: 2, title: 'American Islander', type: 'Cargo', portId: 2},
-    {id: 3, title: 'Port of Los Angeles', type: 'Tug', portId: 1},
-    {id: 4, title: 'Of Course I Still Love You', type: 'Barge', portId: 2},
-    {id: 5, title: 'A Shortfall of Gravitas', type: 'Barge', portId: 0},
-    {id: 6, title: 'Of Course I Still Love You', type: 'Tug', portId: 0},
-    {id: 7, title: 'American Islander', type: 'Cargo', portId: 1},
-    {id: 8, title: 'Port of Los Angeles', type: 'Tug', portId: 2},
-    {id: 9, title: 'Of Course I Still Love You', type: 'Barge', portId: 0},
-    {id: 10, title: 'Of Course I Still Love You', type: 'Tug', portId: 0}
+    {id: 0, title: 'GO Ms Chief', typeId: 2, portId: 0},
+    {id: 1, title: 'A Shortfall of Gravitas', typeId: 0, portId: 1},
+    {id: 2, title: 'American Islander', typeId: 1, portId: 2},
+    {id: 3, title: 'Port of Los Angeles', typeId: 3, portId: 1},
+    {id: 4, title: 'Of Course I Still Love You', typeId: 0, portId: 2},
+    {id: 5, title: 'A Shortfall of Gravitas', typeId: 0, portId: 0},
+    {id: 6, title: 'Of Course I Still Love You', typeId: 3, portId: 0},
+    {id: 7, title: 'American Islander', typeId: 1, portId: 1},
+    {id: 8, title: 'Port of Los Angeles', typeId: 3, portId: 2},
+    {id: 9, title: 'Of Course I Still Love You', typeId: 0, portId: 0},
+    {id: 10, title: 'Of Course I Still Love You', typeId: 3, portId: 0}
   ];
 
-  filteredByType: number;
-
-
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   // Constructor
   // first step - changing the original array with cards, finding and adding a new property "portName" to each card from the array "ports"
@@ -111,16 +95,24 @@ export class AppComponent{
         return card.portId === val.id;
       });
 
+      const type = this.types.find((val) => {
+        return card.typeId === val.id;
+      });
+
+
       // Create new object with current data
       const storeCard = {
         ...card, // Current card
-        portName: port.title // Adding a new field "portName"
+        portName: port.title, // Adding a new field "portName"
+        typeName: type.title // Adding a new field "typeName"
       };
 
       this.storeCards.push(storeCard); // Pushed object to new array "storeCards"
       this.filteredCards = this.storeCards; // Copy to new array "filteredCards" for filter manipulation
     });
   }
+
+
 
   // Calculation of the current state of the paginator after each paginator event
   public getPaginatorData(event) {
@@ -152,9 +144,29 @@ export class AppComponent{
     }
   }
 
-  onGroupsChange(selectedPorts: string[]) {
+
+  onPortsSelected(selectedPorts: string[]): void {
     console.log(selectedPorts);
   }
+
+
+
+  onTypesSelected($event): void{
+    console.log($event);
+    this.applyFilterByType(Number($event));
+  }
+  applyFilterByType(val: number): void {
+      // If the field contains data, filter by "filterValue"
+      this.filteredCards = []; // Clear array "filteredCards"
+      this.storeCards.filter(card => {
+        if (card.typeId === val){
+          this.filteredCards.push(card); // Pushed to cleaned array "filteredCards" each object containing data from the field
+          this.paginator.firstPage(); // Moving to first hage paginator
+        }
+      });
+  }
+
+
 
   nextPage(event){
     this.paginator.nextPage();
