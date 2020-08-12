@@ -86,7 +86,6 @@ export class AppComponent  implements OnInit {
     ports: []
   };
 
-
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   // ngOnInit
@@ -227,7 +226,9 @@ export class AppComponent  implements OnInit {
   }
 
   onTypesSelectedYoArr(val: number): void{
-    // this.selectedType = 2;
+    this.selectedType = val;
+    this.filterSettings.type = this.selectedType;
+    this.filteredResult = this.filter(this.filterSettings);
   }
 
 

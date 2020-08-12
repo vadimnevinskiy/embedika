@@ -67,12 +67,12 @@
         <h3 class="main-sidebar__title">Тип</h3>
         <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedType" (ngModelChange)="onTypesSelected($event)">
           <ul class="main-sidebar__list">
-            <li *ngFor="let type of types"><mat-radio-button value="{{type.id}}" >{{type.title}}</mat-radio-button></li>
+            <li *ngFor="let type of types">
+              <mat-radio-button [value]="type.id" >{{type.title}}</mat-radio-button>
+            </li>
           </ul>
         </mat-radio-group>
       </div>
-
-
   </div>
 </div>
 
