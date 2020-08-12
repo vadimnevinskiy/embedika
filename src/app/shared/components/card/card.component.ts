@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {Card} from '../../../app.component';
 import {map} from 'rxjs/operators';
 
@@ -14,8 +14,20 @@ export class CardComponent implements OnInit {
   constructor() { }
 
 
-
+  @Output() filterTypeEvent = new EventEmitter<number>();
+  @Output() filterPortEvent = new EventEmitter<number>();
 
   ngOnInit() {}
+
+
+  filterType(val) {
+    this.filterTypeEvent.emit(val);
+    console.log(val);
+  }
+
+  filterPort(val){
+    this.filterPortEvent.emit(val);
+    console.log('From component ' + val);
+  }
 
 }

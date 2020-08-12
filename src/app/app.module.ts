@@ -16,15 +16,15 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 
-// import { FilterPipe } from './pipes/filter.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CardComponent
-    // FilterPipe
+    CardComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

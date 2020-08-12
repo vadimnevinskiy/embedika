@@ -2,13 +2,13 @@
     <div class="card-item">
       <h2 class="card-item__title">
         <span>{{card.id}}</span> {{card.title}}
-        <a href="$s"><span class="material-icons">east</span></a>
+        <a href="#"><span class="material-icons">east</span></a>
       </h2>
       <div class="card-item__contend">
         <div><span>Тип</span></div>
-        <div><a href="{{card.typeId}}">{{card.typeName}}</a></div>
+        <div><a href="#" (click)="filterType(card.typeId)">{{card.typeName}}</a></div>
         <div><span>Порт</span></div>
-        <div><a href="{{card.portId}}">{{card.portName}}</a></div>
+        <div><a href="#" (click)="filterPort(card)">{{card.portName}}</a></div>
       </div>
     </div>
 
