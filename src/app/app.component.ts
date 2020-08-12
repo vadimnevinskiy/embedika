@@ -1,7 +1,5 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
-import {PageEvent} from '@angular/material/paginator';
-import {MatPaginator} from '@angular/material/paginator';
-import {isString} from 'util';
+import { Component, OnInit, ViewChild} from '@angular/core';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 
 // Interface for Card items
 export interface Card {
@@ -41,12 +39,10 @@ export class AppComponent  implements OnInit {
   title = 'SpaceX Ships'; // Main title
   firstPage = 0; // Range pages start
   lastPage = 5; // Range pages end
-  search = ''; // Search field
 
-  selectedPorts: Port[] = []; // Array for selected  ports
-  selectedPorts2: number[] = []; // Array for selected  ports
-  selectedPort: Port;
+  selectedPorts: number[] = []; // Array for selected  ports
   selectedType: number;
+
 
   storeCards: Card[] = []; // Array for store all modify cards
   modifiedCards: Card[] = []; // Array for filter manipulation
@@ -93,14 +89,11 @@ export class AppComponent  implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  // Constructor
+  // ngOnInit
   // first step - changing the original array with cards, finding and adding a new property "portName" to each card from the array "ports"
   // second step - saving the modified state of cards - it will be required after cleaning the filter
   // third step - copy to new array "modifiedCards" for filter manipulation
-  constructor() {
-
-
-
+  ngOnInit() {
     this.cards.forEach((card) => {
       const port = this.ports.find((val) => {
         return card.portId === val.id;
@@ -127,24 +120,6 @@ export class AppComponent  implements OnInit {
 
 
 
-  variable: string;
-  typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
-  data: any[];
-
-  ngOnInit()
-  {
-    this.selectedPorts2 = [ 0, 2 ];
-
-    this.variable = 'Loafers,Sneakers';
-    this.data = this.selectedPorts2;
-
-
-
-  }
-
-
-
-
 
   // Calculation of the current state of the paginator after each paginator event
   public getPaginatorData(event) {
@@ -163,7 +138,7 @@ export class AppComponent  implements OnInit {
     if ((value.text && value.text.trim() !== '') && (value.type || value.type === 0) && (value.ports.length > 0)){
       return this.modifiedCards.filter(card => {
         for (const port of value.ports) {
-          if (card.portId === port.id){
+          if (card.portId === port){
             if (card.typeId === value.type){
               if (card.title.toLowerCase().includes(value.text.toLowerCase())){
                 // return card.title.toLowerCase().includes(value.text.toLowerCase());
@@ -178,19 +153,16 @@ export class AppComponent  implements OnInit {
       return this.modifiedCards.filter(card => {
         if (card.typeId === value.type){
           if (card.title.toLowerCase().includes(value.text.toLowerCase())){
-            // return card.title.toLowerCase().includes(value.text.toLowerCase());
             return card;
             this.paginator.firstPage(); // Moving to first hage paginator
           }
         }
-
       });
     }else if ((value.ports.length > 0) && (value.type || value.type === 0)){
         return this.modifiedCards.filter(card => {
           for (const port of value.ports) {
-            if (card.portId === port.id){
+            if (card.portId === port){
               if (card.typeId === value.type){
-                // return card.title.toLowerCase().includes(value.text.toLowerCase());
                 return card;
                 this.paginator.firstPage(); // Moving to first hage paginator
               }
@@ -201,9 +173,8 @@ export class AppComponent  implements OnInit {
     }else if ((value.ports.length > 0) && (value.text && value.text.trim() !== '')){
       return this.modifiedCards.filter(card => {
         for (const port of value.ports) {
-          if (card.portId === port.id){
+          if (card.portId === port){
             if (card.title.toLowerCase().includes(value.text.toLowerCase())){
-              // return card.title.toLowerCase().includes(value.text.toLowerCase());
               return card;
               this.paginator.firstPage(); // Moving to first hage paginator
             }
@@ -219,10 +190,9 @@ export class AppComponent  implements OnInit {
         }
       });
     } else if (value.ports.length > 0){
-      // this.modifiedCards = []; // Clear array "modifiedCards"
       return this.modifiedCards.filter(card => {
         for (const port of value.ports) {
-          if (card.portId === port.id){
+          if (card.portId === port){
             return card;
             this.paginator.firstPage(); // Moving to first hage paginator
           }
@@ -256,22 +226,23 @@ export class AppComponent  implements OnInit {
     this.filteredResult = this.filter(this.filterSettings);
   }
 
+  onTypesSelectedYoArr(val: number): void{
+    // this.selectedType = 2;
+  }
 
 
-  onPortsSelected(selectedPorts: string[]): void {
-    console.log('From app ' + selectedPorts);
-    this.filterSettings.ports = selectedPorts;
+  onPortsSelected(val: number[]): void {
+    this.selectedPorts = val;
+    this.filterSettings.ports = val;
     this.filteredResult = this.filter(this.filterSettings);
   }
 
-  onPortsSelectedToArr(val: Card): void {
-    this.selectedPort = {
-      id: val.portId,
-      title: val.portName
-    };
-    this.selectedPorts.push(this.selectedPort);
-    this.filterSettings.ports = this.selectedPorts;
-    this.filteredResult = this.filter(this.filterSettings);
+  onPortsSelectedToArr(val: number): void {
+    if (!this.selectedPorts.some(e => e === val)){
+      this.selectedPorts = [val];
+      this.filterSettings.ports = this.selectedPorts;
+      this.filteredResult = this.filter(this.filterSettings);
+    }
   }
 
 

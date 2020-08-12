@@ -27,7 +27,6 @@ export class CardComponent implements OnInit {
 
   filterPort(val){
     this.filterPortEvent.emit(val);
-    console.log('From component ' + val);
   }
 
 }

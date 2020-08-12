@@ -1,36 +1,17 @@
 <div class="grid">
   <div class="main-content">
-    <mat-selection-list #shoes2 [(ngModel)]="selectedPorts2" >
-      <mat-list-option *ngFor="let port of ports" [value]="port.id" >
-        {{port.title}}
-      </mat-list-option>
-    </mat-selection-list>
-
-    <p>
-      Options selected: {{shoes2.selectedOptions.selected.length}}
-    </p>
-    {{selectedPorts2|json}}
-
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-
-
     <h1>{{ title }}</h1>
-    <app-card
-      *ngFor="let card of (filteredResult  | slice: firstPage : lastPage)"
-      [card]="card"
-      (filterTypeEvent)="onTypesSelected($event)"
-      (filterPortEvent) = "onPortsSelectedToArr($event)"
-    ></app-card>
-
+    <div *ngIf="filteredResult.length > 0; else defaultBlock">
+      <app-card
+        *ngFor="let card of (filteredResult  | slice: firstPage : lastPage)"
+        [card]="card"
+        (filterTypeEvent)="onTypesSelectedYoArr($event)"
+        (filterPortEvent) = "onPortsSelectedToArr($event)"
+      ></app-card>
+    </div>
+    <ng-template #defaultBlock>
+      Has not items!
+    </ng-template>
     <!--  Invisible Paginator  -->
     <mat-paginator *ngIf="filteredResult" [length]="filteredResult.length" pageSize=5 showFirstLastButtons="false" hidePageSize="true" (page)="pageEvent = getPaginatorData($event)" ></mat-paginator>
   </div>
@@ -73,7 +54,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #port  [(ngModel)]="selectedPorts" (ngModelChange)="onPortsSelected($event)">
-            <mat-list-option *ngFor="let port of ports" [value]="port">
+            <mat-list-option *ngFor="let port of ports" [value]="port.id">
               {{port.title}}
             </mat-list-option>
           </mat-selection-list>
@@ -90,12 +71,6 @@
           </ul>
         </mat-radio-group>
       </div>
-
-    <div>Filtered by: {{selectedType}}</div>
-
-
-
-
 
 
   </div>
