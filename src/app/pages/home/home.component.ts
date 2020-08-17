@@ -32,7 +32,6 @@ export class HomeComponent implements OnInit{
   ports: Port[] = []; // Ports
   types: Type[] = []; // Types
 
-  index = 0;
 
   filterSettings = {
     text: '',
@@ -86,14 +85,15 @@ export class HomeComponent implements OnInit{
 
 
 
-// Если в строке поиска есть какие то данные то он не заходит во вторую конструкцию
+// Filter array
   filter(value){
+    // If search Card title and Card type and Card port
     if ((value.text && value.text.trim() !== '') && (value.type || value.type === 0) && (value.ports.length > 0)){
       return this.modifiedCards.filter(card => {
         for (const port of value.ports) {
-          if (card.portId === port){
-            if (card.typeId === value.type){
-              if (card.title.toLowerCase().includes(value.text.toLowerCase())){
+          if (card.portId === port){ // Search items by Port
+            if (card.typeId === value.type){ // Search items by Type
+              if (card.title.toLowerCase().includes(value.text.toLowerCase())){ // Search items by Text
                 this.paginator.firstPage(); // Moving to first hage paginator
                 return card;
               }
@@ -101,32 +101,31 @@ export class HomeComponent implements OnInit{
           }
         }
       });
-    }else if ((value.text && value.text.trim() !== '') && (value.type || value.type === 0)){
+    }else if ((value.text && value.text.trim() !== '') && (value.type || value.type === 0)){ // If search Card title and Card type
       return this.modifiedCards.filter(card => {
-        if (card.typeId === value.type){
-          if (card.title.toLowerCase().includes(value.text.toLowerCase())){
+        if (card.typeId === value.type){ // Search items by Type
+          if (card.title.toLowerCase().includes(value.text.toLowerCase())){ // Search items by Text
             this.paginator.firstPage(); // Moving to first hage paginator
             return card;
           }
         }
       });
-    }else if ((value.ports.length > 0) && (value.type || value.type === 0)){
+    }else if ((value.ports.length > 0) && (value.type || value.type === 0)){ // If search Card ports and Card type
       return this.modifiedCards.filter(card => {
         for (const port of value.ports) {
-          if (card.portId === port){
-            if (card.typeId === value.type){
+          if (card.portId === port){ // Search items by Port
+            if (card.typeId === value.type){ // Search items by Type
               this.paginator.firstPage(); // Moving to first hage paginator
               return card;
             }
           }
         }
-        this.index = this.index + 1;
       });
-    }else if ((value.ports.length > 0) && (value.text && value.text.trim() !== '')){
+    }else if ((value.ports.length > 0) && (value.text && value.text.trim() !== '')){ // If search Card ports and Text
       return this.modifiedCards.filter(card => {
-        for (const port of value.ports) {
+        for (const port of value.ports) { // Search items by Port
           if (card.portId === port){
-            if (card.title.toLowerCase().includes(value.text.toLowerCase())){
+            if (card.title.toLowerCase().includes(value.text.toLowerCase())){ // Search items by Text
               this.paginator.firstPage(); // Moving to first hage paginator
               return card;
             }
@@ -134,14 +133,14 @@ export class HomeComponent implements OnInit{
         }
       });
       return this.filteredResult;
-    } else if (value.text && value.text.trim() !== ''){
+    } else if (value.text && value.text.trim() !== ''){ // If search by Text
       return this.modifiedCards.filter(card => {
         if (card.title.toLowerCase().includes(value.text.toLowerCase())){
           this.paginator.firstPage(); // Moving to first hage paginator
           return card.title.toLowerCase().includes(value.text.toLowerCase());
         }
       });
-    } else if (value.ports.length > 0){
+    } else if (value.ports.length > 0){ // If search by Ports
       return this.modifiedCards.filter(card => {
         for (const port of value.ports) {
           if (card.portId === port){
@@ -149,17 +148,15 @@ export class HomeComponent implements OnInit{
             return card;
           }
         }
-        this.index = this.index + 1;
       });
-    } else if (value.type || value.type === 0){
+    } else if (value.type || value.type === 0){ // If search by Type
       return this.modifiedCards.filter(card => {
         if (card.typeId === value.type){
           this.paginator.firstPage(); // Moving to first hage paginator
           return card;
         }
-        this.index = this.index + 1;
       });
-    } else {
+    } else { // If reset filters
       return this.filteredResult = this.modifiedCards;
       return this.filteredResult;
     }
@@ -204,11 +201,11 @@ export class HomeComponent implements OnInit{
 
 
 
-  next(event){
+  next(){
     this.paginator.nextPage();
   }
 
-  previous(event){
+  previous(){
     this.paginator.previousPage();
   }
 

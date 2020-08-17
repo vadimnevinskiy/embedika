@@ -12,21 +12,20 @@ export class CardComponent implements OnInit {
 
   @Input() card: Card;
 
+  // Send event to home component
   @Output() filterTypeEvent = new EventEmitter<number>();
   @Output() filterPortEvent = new EventEmitter<number>();
 
 
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
 
-  filterType(val) {
+  selectAllByType(val) {
     this.filterTypeEvent.emit(val);
   }
 
-  filterPort(val){
+  selectAllByPort(val){
     this.filterPortEvent.emit(val);
   }
 

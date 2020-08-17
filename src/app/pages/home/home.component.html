@@ -28,14 +28,14 @@
   <!------------------------------------------PAGINATOR------------------------------------------>
   <div class="paginator-block">
     <div class="paginator-custom">
-      <div class="paginator-custom__left"><span class="material-icons" (click)="previous($event)">keyboard_arrow_left</span></div>
+      <div class="paginator-custom__left"><span class="material-icons" (click)="previous()">keyboard_arrow_left</span></div>
       <div class="paginator-custom__counter">
-        <span class="paginator-custom__text" *ngIf="pageEvent; else Zero">{{pageEvent.pageIndex}}</span>
+        <span class="paginator-custom__text" *ngIf="pageEvent; else Zero">{{pageEvent.pageIndex + 1}}</span>
         <ng-template #Zero>
-          <span class="paginator-custom__text">0</span>
+          <span class="paginator-custom__text">1</span>
         </ng-template>
       </div>
-      <div class="paginator-custom__right"><span class="material-icons" (click)="next($event)">keyboard_arrow_right</span></div>
+      <div class="paginator-custom__right"><span class="material-icons" (click)="next()">keyboard_arrow_right</span></div>
     </div>
   </div>
 
