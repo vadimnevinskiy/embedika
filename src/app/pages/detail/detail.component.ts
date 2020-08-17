@@ -20,9 +20,7 @@ export class DetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      console.log('Params', params);
       this.card = this.cardService.getCard(Number(params.id));
-      this.card;
     });
   }
 

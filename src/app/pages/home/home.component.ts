@@ -1,7 +1,8 @@
-import { Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {CardService} from '../../services/card.service';
 import {Card, Port, Type} from '../../interfaces';
+import {ActivatedRoute, Params} from '@angular/router';
 
 
 @Component({
@@ -9,7 +10,7 @@ import {Card, Port, Type} from '../../interfaces';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent{
+export class HomeComponent implements OnInit{
 
   // Variables
   pageEvent: PageEvent;
@@ -19,17 +20,17 @@ export class HomeComponent{
   lastPage = 5; // Range pages end
 
   selectedPorts: number[] = []; // Array for selected  ports
-  selectedType: number;
+  selectedType: number; // Id for selected  type
 
 
   storeCards: Card[] = []; // Array for store all modify cards
   modifiedCards: Card[] = []; // Array for filter manipulation
 
-  filteredResult: Card[] = [];
+  filteredResult: Card[] = []; // Filtered cards
 
-  cards: Card[] = [];
-  ports: Port[] = [];
-  types: Type[] = [];
+  cards: Card[] = []; // Cards
+  ports: Port[] = []; // Ports
+  types: Type[] = []; // Types
 
   index = 0;
 
@@ -45,18 +46,33 @@ export class HomeComponent{
   // first step - changing the original array with cards, finding and adding a new property "portName" to each card from the array "ports"
   // second step - saving the modified state of cards - it will be required after cleaning the filter
   // third step - copy to new array "modifiedCards" for filter manipulation
-  constructor(private cardService: CardService) {
-    this.cards = this.cardService.cards;
-    this.ports = this.cardService.ports;
-    this.types = this.cardService.types;
+  constructor(
+    private cardService: CardService,
+    private route: ActivatedRoute
+  ) {
+    this.cards = this.cardService.cards; // Get all cards from service
+    this.ports = this.cardService.ports; // Get all ports from service
+    this.types = this.cardService.types; // Get all types from service
 
-    this.storeCards = this.cardService.storeCards;
+    this.storeCards = this.cardService.storeCards;  // Get all "storeCards" from service
     this.modifiedCards = this.storeCards; // Copy to new array "modifiedCards" for filter manipulation
-    this.filteredResult = this.modifiedCards;
+    this.filteredResult = this.modifiedCards; // Copy to new array "filteredResult" for filter manipulation
   }
 
 
-
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params: Params) => {
+      console.log('Params', params);
+      if(params.text || params.type || params.ports){
+        this.filterSettings = {
+          text: params.text,
+          type: params.type,
+          ports: params.ports,
+        };
+        this.filteredResult = this.filter(this.filterSettings);
+      }
+    });
+  }
 
   // Calculation of the current state of the paginator after each paginator event
   public getPaginatorData(event) {
