@@ -1,3 +1,4 @@
+// Interface for Cards
 export interface Card {
   id: number;
   title: string;
@@ -14,12 +15,10 @@ export interface Card {
 export interface Port {
   id: number;
   title: string;
-  // checked?: boolean;
 }
 
 // Interface for Type items
 export interface Type {
   id: number;
   title: string;
-  // checked?: boolean;
 }

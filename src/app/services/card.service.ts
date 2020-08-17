@@ -38,7 +38,6 @@ export class CardService{
 
   storeCards: Card[] = []; // Array for store all modify cards
   modifiedCards: Card[] = []; // Array for filter manipulation
-
   filteredResult: Card[] = [];
 
   constructor() {
