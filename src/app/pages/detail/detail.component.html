@@ -1,0 +1,19 @@
+<div class="card-item">
+  <a routerLink="/" class="back"><span class="material-icons">arrow_back</span>Вернуться</a>
+  <h2 class="card-item__title">
+    {{card.title}}
+  </h2>
+  <div class="card-item__contend">
+    <div><span>Тип</span></div>
+    <div><a routerLink="/">{{card.typeName}}</a></div>
+    <div><span>Порт</span></div>
+    <div><a routerLink="/">{{card.portName}}</a></div>
+    <div><span>Вес</span></div>
+    <div><a routerLink="/">{{card.weight}} кг</a></div>
+    <div><span>Год</span></div>
+    <div><a routerLink="/">{{card.year}}</a></div>
+
+    <div><span>Миссии</span></div>
+    <div class="card-item__mission"><a href="#" *ngFor="let mission of card.mission">{{mission}}</a></div>
+  </div>
+</div>

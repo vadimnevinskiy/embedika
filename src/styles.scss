@@ -148,46 +148,6 @@ h3.main-sidebar__title{
 }
 
 
-.paginator-custom{
-  display: flex;
-  vertical-align: middle;
-  text-align: center;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: center;
-  margin-left: 15px;
-}
-
-
-.paginator-custom .paginator-custom__text{
-  font-size: 20px;
-  line-height: 20px;
-  -ms-user-select: none;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-}
-
-
-
-.paginator-custom .material-icons{
-  font-size: 26px;
-  line-height: 34px;
-  cursor: pointer;
-  color: #3C474C;
-  &:hover{
-    color: #2962FF;
-  }
-
-  -ms-user-select: none;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-}
-
-
-
 .mat-radio-outer-circle {
   .mat-radio-checked & {
     border-color: #2962FF!important;

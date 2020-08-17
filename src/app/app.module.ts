@@ -17,6 +17,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 
 import { FilterPipe } from './pipes/filter.pipe';
+import { DetailComponent } from './pages/detail/detail.component';
+import { HomeComponent } from './pages/home/home.component';
+
 
 
 
@@ -24,7 +27,9 @@ import { FilterPipe } from './pipes/filter.pipe';
   declarations: [
     AppComponent,
     CardComponent,
-    FilterPipe
+    FilterPipe,
+    DetailComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

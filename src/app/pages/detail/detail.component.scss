@@ -1,0 +1,31 @@
+.card-item{
+  margin: 20px;
+  padding: 20px 0px 25px 0px;
+}
+.card-item__contend{
+  display: grid;
+  grid-template-columns: minmax(50px, 1fr) minmax(150px, 2fr) minmax(50px, 1fr) minmax(150px, 2fr);
+  grid-template-rows: minmax(30px, 70px) minmax(30px, 70px) minmax(30px, 150px);
+}
+.card-item__mission{
+  grid-column: 2/4;
+}
+.card-item__title{
+  margin-bottom: 28px;
+}
+.card-item__title a{
+  text-decoration: none;
+  margin-left: 20px;
+  &:hover{
+    text-decoration: none;
+  }
+}
+.card-item .back{
+  display: block;
+  margin-bottom: 20px;
+}
+.card-item .back span{
+  display: inline-block;
+  line-height: 16px;
+  vertical-align: -8px;
+}

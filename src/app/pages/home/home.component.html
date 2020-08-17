@@ -1,0 +1,86 @@
+<div class="grid">
+  <div class="main-content">
+    <div *ngIf="filteredResult.length > 0; else defaultBlock">
+      <h1>{{ title }}</h1>
+      <app-card
+        *ngFor="let card of (filteredResult  | slice: firstPage : lastPage)"
+        [card]="card"
+        (filterTypeEvent)="onTypesSelectedFromList($event)"
+        (filterPortEvent) = "onPortsSelectedFromList($event)"
+      ></app-card>
+    </div>
+    <ng-template #defaultBlock>
+      <div class="error">No records!</div>
+    </ng-template>
+    <!--  Invisible Paginator  -->
+    <mat-paginator #paginator
+         [length]="filteredResult.length"
+         [pageSize]="5"
+         showFirstLastButtons="false"
+          hidePageSize="true"
+         (page)="pageEvent = getPaginatorData($event)"
+         style="display: none"
+    >
+    </mat-paginator>
+  </div>
+
+
+  <!------------------------------------------PAGINATOR------------------------------------------>
+  <div class="paginator-block">
+    <div class="paginator-custom">
+      <div class="paginator-custom__left"><span class="material-icons" (click)="previous($event)">keyboard_arrow_left</span></div>
+      <div class="paginator-custom__counter">
+        <span class="paginator-custom__text" *ngIf="pageEvent; else Zero">{{pageEvent.pageIndex}}</span>
+        <ng-template #Zero>
+          <span class="paginator-custom__text">0</span>
+        </ng-template>
+      </div>
+      <div class="paginator-custom__right"><span class="material-icons" (click)="next($event)">keyboard_arrow_right</span></div>
+    </div>
+  </div>
+
+  <!------------------------------------------PAGINATOR------------------------------------------>
+
+
+  <div class="main-sidebar">
+    <h2 class="main-sidebar__title">Фильтры</h2>
+
+    <div class="filter-block">
+      <mat-form-field class="main-sidebar__search">
+        <mat-label>Название</mat-label>
+        <input matInput name="search" (keyup)="onSearchText($event)">
+      </mat-form-field>
+    </div>
+
+
+    <div class="filter-block">
+      <mat-accordion class="main-sidebar__mat-expansion">
+        <span class="main-sidebar__label">Порт</span>
+        <mat-expansion-panel hideToggle class="mat-elevation-z">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Выбрано: {{port.selectedOptions.selected.length}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #port  [(ngModel)]="selectedPorts" (ngModelChange)="onPortsSelected($event)">
+            <mat-list-option *ngFor="let port of ports" [value]="port.id">
+              {{port.title}}
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+
+    <div class="filter-block">
+      <h3 class="main-sidebar__title">Тип</h3>
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedType" (ngModelChange)="onTypesSelected($event)">
+        <ul class="main-sidebar__list">
+          <li *ngFor="let type of types">
+            <mat-radio-button [value]="type.id" >{{type.title}}</mat-radio-button>
+          </li>
+        </ul>
+      </mat-radio-group>
+    </div>
+  </div>
+</div>

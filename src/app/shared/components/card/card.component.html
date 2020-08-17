@@ -2,7 +2,7 @@
     <div class="card-item">
       <h2 class="card-item__title">
         <span>{{card.id}}</span> {{card.title}}
-        <a href="#"><span class="material-icons">east</span></a>
+        <a [routerLink]="['/detail', card.id]"><span class="material-icons">arrow_forward</span></a>
       </h2>
       <div class="card-item__contend">
         <div><span>Тип</span></div>

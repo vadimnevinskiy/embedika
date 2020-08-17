@@ -1,6 +1,5 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
-import {Card} from '../../../app.component';
-import {map} from 'rxjs/operators';
+import {Card} from '../../../interfaces';
 
 
 @Component({
@@ -10,8 +9,8 @@ import {map} from 'rxjs/operators';
 })
 export class CardComponent implements OnInit {
 
+
   @Input() card: Card;
-  constructor() { }
 
 
   @Output() filterTypeEvent = new EventEmitter<number>();
@@ -22,7 +21,6 @@ export class CardComponent implements OnInit {
 
   filterType(val) {
     this.filterTypeEvent.emit(val);
-    console.log(val);
   }
 
   filterPort(val){
