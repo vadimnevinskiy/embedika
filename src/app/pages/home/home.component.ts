@@ -3,6 +3,7 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {CardService} from '../../services/card.service';
 import {Card, Port, Type} from '../../interfaces';
 import {ActivatedRoute, Params} from '@angular/router';
+import {MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS} from '@angular/material/button-toggle';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class HomeComponent implements OnInit{
   firstPage = 0; // Range pages start
   lastPage = 5; // Range pages end
 
+  selectedText = '';
   selectedPorts: number[] = []; // Array for selected  ports
   selectedType: number; // Id for selected  type
 
@@ -38,6 +40,7 @@ export class HomeComponent implements OnInit{
     type: null,
     ports: []
   };
+
 
   @ViewChild('paginator') paginator: MatPaginator;
 
@@ -61,17 +64,56 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
-      console.log('Params', params);
-      if(params.text || params.type || params.ports){
+      if (params.text || params.type || params.ports){
         this.filterSettings = {
           text: params.text,
           type: params.type,
           ports: params.ports,
         };
-        this.filteredResult = this.filter(this.filterSettings);
+        this.filteredResult = this.filterList(this.filterSettings);
       }
     });
+
+    this.getFilterSettings();
   }
+
+
+
+  getFilterSettings(){
+    if (localStorage.getItem('filter_text')){
+      this.filterSettings.text = localStorage.getItem('filter_text');
+    }
+    if(Number(localStorage.getItem('filter_type')) || localStorage.getItem('filter_type') === '0'){
+      this.filterSettings.type = Number(localStorage.getItem('filter_type'));
+    }
+    if(localStorage.getItem('filter_port')){
+      this.filterSettings.ports = localStorage.getItem('filter_port').split(',').map(item => {
+        return Number(item);
+      });
+    }
+
+
+    this.selectedText = this.filterSettings.text;
+    this.selectedPorts = this.filterSettings.ports;
+    this.selectedType = this.filterSettings.type;
+    this.filteredResult = this.filterList(this.filterSettings);
+  }
+
+  onClearFilter(){
+    this.filterSettings = {
+      text: '',
+      type: null,
+      ports: []
+    };
+    this.selectedText = '';
+    this.selectedPorts = [];
+    this.selectedType = null;
+
+    localStorage.clear();
+    this.filteredResult = this.filterList(this.filterSettings);
+  }
+
+
 
   // Calculation of the current state of the paginator after each paginator event
   public getPaginatorData(event) {
@@ -86,7 +128,7 @@ export class HomeComponent implements OnInit{
 
 
 // Filter array
-  filter(value){
+  filterList(value){
     // If search Card title and Card type and Card port
     if ((value.text && value.text.trim() !== '') && (value.type || value.type === 0) && (value.ports.length > 0)){
       return this.modifiedCards.filter(card => {
@@ -94,7 +136,10 @@ export class HomeComponent implements OnInit{
           if (card.portId === port){ // Search items by Port
             if (card.typeId === value.type){ // Search items by Type
               if (card.title.toLowerCase().includes(value.text.toLowerCase())){ // Search items by Text
-                this.paginator.firstPage(); // Moving to first hage paginator
+                // Moving to first hage paginator
+                if (this.paginator) {
+                  this.paginator.firstPage();
+                }
                 return card;
               }
             }
@@ -105,7 +150,10 @@ export class HomeComponent implements OnInit{
       return this.modifiedCards.filter(card => {
         if (card.typeId === value.type){ // Search items by Type
           if (card.title.toLowerCase().includes(value.text.toLowerCase())){ // Search items by Text
-            this.paginator.firstPage(); // Moving to first hage paginator
+            // Moving to first hage paginator
+            if (this.paginator) {
+              this.paginator.firstPage();
+            }
             return card;
           }
         }
@@ -115,7 +163,10 @@ export class HomeComponent implements OnInit{
         for (const port of value.ports) {
           if (card.portId === port){ // Search items by Port
             if (card.typeId === value.type){ // Search items by Type
-              this.paginator.firstPage(); // Moving to first hage paginator
+              // Moving to first hage paginator
+              if (this.paginator) {
+                this.paginator.firstPage();
+              }
               return card;
             }
           }
@@ -126,7 +177,10 @@ export class HomeComponent implements OnInit{
         for (const port of value.ports) { // Search items by Port
           if (card.portId === port){
             if (card.title.toLowerCase().includes(value.text.toLowerCase())){ // Search items by Text
-              this.paginator.firstPage(); // Moving to first hage paginator
+              // Moving to first hage paginator
+              if (this.paginator) {
+                this.paginator.firstPage();
+              }
               return card;
             }
           }
@@ -136,7 +190,10 @@ export class HomeComponent implements OnInit{
     } else if (value.text && value.text.trim() !== ''){ // If search by Text
       return this.modifiedCards.filter(card => {
         if (card.title.toLowerCase().includes(value.text.toLowerCase())){
-          this.paginator.firstPage(); // Moving to first hage paginator
+          // Moving to first hage paginator
+          if (this.paginator) {
+            this.paginator.firstPage();
+          }
           return card.title.toLowerCase().includes(value.text.toLowerCase());
         }
       });
@@ -144,7 +201,10 @@ export class HomeComponent implements OnInit{
       return this.modifiedCards.filter(card => {
         for (const port of value.ports) {
           if (card.portId === port){
-            this.paginator.firstPage(); // Moving to first hage paginator
+            // Moving to first hage paginator
+            if (this.paginator) {
+              this.paginator.firstPage();
+            }
             return card;
           }
         }
@@ -152,7 +212,10 @@ export class HomeComponent implements OnInit{
     } else if (value.type || value.type === 0){ // If search by Type
       return this.modifiedCards.filter(card => {
         if (card.typeId === value.type){
-          this.paginator.firstPage(); // Moving to first hage paginator
+          // Moving to first hage paginator
+          if (this.paginator) {
+            this.paginator.firstPage();
+          }
           return card;
         }
       });
@@ -165,39 +228,42 @@ export class HomeComponent implements OnInit{
 
   // Search text
   onSearchText(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value; // Get text from input
+    // const filterValue = (event.target as HTMLInputElement).value; // Get text from input
+    const filterValue = this.selectedText; // Get text from input
     this.filterSettings.text = filterValue; // Add selected text at filterSettings
-    this.filteredResult = this.filter(this.filterSettings);
+    this.filteredResult = this.filterList(this.filterSettings);
+    localStorage.setItem('filter_text', this.filterSettings.text);
   }
 
   onTypesSelected($event): void{
     this.filterSettings.type = Number($event); // Add selected type at filterSettings
-    this.filteredResult = this.filter(this.filterSettings);
+    this.filteredResult = this.filterList(this.filterSettings);
+    localStorage.setItem('filter_type', this.filterSettings.type);
   }
 
   onTypesSelectedFromList(val: number): void{
     this.selectedType = val;
     this.filterSettings.type = this.selectedType; // Add selected type at filterSettings
-    this.filteredResult = this.filter(this.filterSettings);
+    this.filteredResult = this.filterList(this.filterSettings);
+    localStorage.setItem('filter_type', this.filterSettings.type);
   }
 
 
   onPortsSelected(val: number[]): void {
     this.selectedPorts = val;
     this.filterSettings.ports = val; // Add selected ports at filterSettings
-    this.filteredResult = this.filter(this.filterSettings);
+    this.filteredResult = this.filterList(this.filterSettings);
+    localStorage.setItem('filter_port', this.filterSettings.ports.join());
   }
 
   onPortsSelectedFromList(val: number): void {
     if (!this.selectedPorts.some(e => e === val)){
       this.selectedPorts = [val];
       this.filterSettings.ports = this.selectedPorts; // Add selected ports at filterSettings
-      this.filteredResult = this.filter(this.filterSettings);
+      this.filteredResult = this.filterList(this.filterSettings);
+      localStorage.setItem('filter_port', this.filterSettings.ports.join());
     }
   }
-
-
-
 
 
 

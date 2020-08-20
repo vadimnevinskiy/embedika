@@ -42,12 +42,20 @@
 
 
   <div class="main-sidebar">
-    <h2 class="main-sidebar__title">Фильтры</h2>
+    <h2 class="main-sidebar__title">
+      Фильтры
+      <span class="material-icons"
+            matTooltip="Clear all"
+            matTooltipPosition="right"
+            matTooltipHideDelay="100000"
+            (click)="onClearFilter()"
+      >clear</span>
+    </h2>
 
     <div class="filter-block">
       <mat-form-field class="main-sidebar__search">
         <mat-label>Название</mat-label>
-        <input matInput name="search" (keyup)="onSearchText($event)">
+        <input matInput name="search" (keyup)="onSearchText($event)" [(ngModel)]="selectedText">
       </mat-form-field>
     </div>
 

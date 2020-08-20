@@ -41,5 +41,4 @@ export class CardService{
   getCard(id: number){
     return this.filteredResult.find(item => item.id === id);
   }
-
 }

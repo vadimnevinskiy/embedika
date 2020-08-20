@@ -8,7 +8,12 @@
   align-content: center;
   margin-left: 15px;
 }
-
+.main-sidebar__title .material-icons{
+  display: inline-block;
+  vertical-align: -7px;
+  color: #ccc;
+  cursor: pointer;
+}
 
 .paginator-custom .paginator-custom__text{
   font-size: 20px;
